@@ -94,6 +94,19 @@ def load_from_html(filename: str) -> list[dict]:
     
     return all_rows
 
+def save_as_json(table: list[dict], filename:str) -> None:
+    """
+    saves a dataset in JSON format.
+    :param table: the dataset to save
+    :param filename: the file path of the json data to write
+    """
+    jsonName = filename + '.json'
+    with open(jsonName, 'w') as file:
+        file.write(str(table))
+        print("here2")
+
+    
+
 
 
 
