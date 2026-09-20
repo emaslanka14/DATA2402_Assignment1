@@ -2,7 +2,7 @@ from file_IO import load_from_html, load_from_csv, save_as_json
 from data_processing import print_stats
 
 # load data
-filename = 'data/student_dataset.txt'
+filename = 'data/census_dataset.txt'
 try:
     with open(filename, 'r') as file:
         while True:
@@ -13,7 +13,7 @@ try:
             else:
                 file.close()
                 break
-        
+        print(f"First line of the file: {firstLine}")
         if firstLine.startswith('<table>'):
             table = load_from_html(filename)
         elif firstLine.find(',') != -1:
@@ -30,4 +30,3 @@ else:
     # print stats
     print_stats(table)
     save_as_json(table, filename)
-    print("here")

@@ -7,20 +7,20 @@ def load_from_csv(filename: str) -> list[dict]:
             each dictionary should map column names to values
     """
     with open(filename, 'r') as file:
-        contents = file.read()
         all_rows = []
 
         # process the first line, pull out the column names
-        first_line, *rest_of_lines = contents.splitlines()
+        first_line = file.readline().strip()
         columns = first_line.split(',')
 
         # process the rest of the text: the table body
-        for row_text in rest_of_lines:
-            values = row_text.split(',')
+        for line in file:
+            line = line.strip()
+            values = line.split(',')
 
             # check the row has the right number of values in it
             if len(values) != len(columns):
-                raise Exception(f'wrong number of values in row: {row_text}')
+                raise Exception(f'wrong number of values in row: {line}')
 
             this_row_dict = dict()
             for i in range(len(columns)):
@@ -101,9 +101,31 @@ def save_as_json(table: list[dict], filename:str) -> None:
     :param filename: the file path of the json data to write
     """
     jsonName = filename + '.json'
+    all_formatted_rows = []
+
+    for row in table:
+        formatted_items = []
+        for key, value in row.items():
+            #print("key: ", key, "type: ", type(key), "value: ", value, "type: ", type(value))
+            jsonKey = f'"{key}"'
+
+            if type(value) == str:
+                jsonValue = f'"{value}"'
+            else:
+                jsonValue = str(value)
+
+            formatted_items.append(f"{jsonKey}: {jsonValue}")
+
+        row_string = "{" + ", ".join(formatted_items) + "}"
+
+        #print("row_string: ", row_string)
+        all_formatted_rows.append(row_string)
+
+    final_json_string = "[\n  " + ",\n  ".join(all_formatted_rows) + "\n]"
+
+
     with open(jsonName, 'w') as file:
-        file.write(str(table))
-        print("here2")
+        file.write(final_json_string)
 
     
 
