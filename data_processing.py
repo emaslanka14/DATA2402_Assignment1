@@ -11,8 +11,9 @@ def print_stats(data: list[dict]) -> None:
     for column in columns:
         # determine if this is a text or numeric column
         if type(data[0][column]) == float:
-            # process this as a numeric column
-            pass # not in this partial solution :)
+            values = [row[column] for row in data]
+            average = sum(values) / len(values)
+            print(f"{column}: average value is {average:.1f}")
 
         else:  # this is a text column
             
@@ -30,4 +31,4 @@ def print_stats(data: list[dict]) -> None:
                     biggest_count = count
                     most_common = value
             
-            print(f"most common value for {column}: {most_common}")
+            print(f"{column}: most common value is {most_common}")

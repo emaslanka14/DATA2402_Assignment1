@@ -58,7 +58,7 @@ def load_from_html(filename: str) -> list[dict]:
 def load_from_csv(filename: str) -> list[dict]:
 
     with open(filename, 'r') as file:
-        contents = file.read()
+        contents = file.read(200)
 
     all_rows = []
 
@@ -108,4 +108,35 @@ def load_dataset(filename: str) -> list[dict]:
             return load_from_html(filename)
         return load_from_csv(filename)
     except (ValueError, AttributeError, IndexError):
-        raise ValueError("Error, data must be in valid CSV or HTML format") from None
+        raise AttributeError("Error, data must be in valid CSV or HTML format") from None
+
+
+def save_to_json(data: list[dict], filename: str) -> None:
+    with open(filename, 'w') as file:
+        file.write('[\n')
+
+        for i in range(len(data)):
+            row = data[i]
+            file.write('  {\n')
+
+            keys = list(row.keys())
+            for j in range(len(keys)):
+                key = keys[j]
+                value = row[key]
+
+                if type(value) == float:
+                    value_text = str(value)
+                else:
+                    value_text = '"' + str(value) + '"'
+
+                if j < len(keys) - 1:
+                    file.write(f'    "{key}": {value_text},\n')
+                else:
+                    file.write(f'    "{key}": {value_text}\n')
+
+            if i < len(data) - 1:
+                file.write('  },\n')
+            else:
+                file.write('  }\n')
+
+        file.write(']\n')

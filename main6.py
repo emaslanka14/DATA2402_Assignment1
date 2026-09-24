@@ -8,3 +8,5 @@ table = file_IO.load_dataset(filename)
 
 # print table statistics
 print_stats(table)
+
+file_IO.save_to_json(table, 'output.txt')
