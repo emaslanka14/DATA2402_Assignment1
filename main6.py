@@ -13,7 +13,7 @@ try:
             else:
                 file.close()
                 break
-        print(f"First line of the file: {firstLine}")
+        #print(f"First line of the file: {firstLine}")
         if firstLine.startswith('<table>'):
             table = load_from_html(filename)
         elif firstLine.find(',') != -1:
