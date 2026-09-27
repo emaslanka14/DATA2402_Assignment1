@@ -100,7 +100,11 @@ def save_as_json(table: list[dict], filename:str) -> None:
     :param table: the dataset to save
     :param filename: the file path of the json data to write
     """
-    jsonName = filename + '.json'
+    fileNameSplit = filename.rsplit('.', maxsplit=1)
+    fileNameSplit.pop() #Remove file extension
+    cleanFileName = fileNameSplit[0]  
+
+    jsonName = cleanFileName + '.json'
     all_formatted_rows = []
 
     for row in table:
