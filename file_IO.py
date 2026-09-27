@@ -131,6 +131,13 @@ def save_as_json(table: list[dict], filename:str) -> None:
     with open(jsonName, 'w') as file:
         file.write(final_json_string)
 
+def read_some_JSON(filename):
+    """
+    Helper function for the Jupyter notebook just to show the final JSON output a lil
+    """
+    jsonFileName = filename.rsplit('.', maxsplit=1)[0] 
+    with open(f"{jsonFileName}.json", "r") as jsonFile:
+        print(jsonFile.read(6000)) #Read 6000 chars from our JSON file
     
 
 

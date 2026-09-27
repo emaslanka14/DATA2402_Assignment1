@@ -26,7 +26,6 @@ def print_stats(data: list[dict]) -> None:
                 print(f"average value for {column}: {average}")
 
         else:  # this is a text column
-            
             # build a dict that counts number of times we've seen each value
             # within this column
             value_counts = dict()
